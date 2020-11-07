@@ -5,7 +5,7 @@ print("Welcome to Menu Program")
 loc = input("\nDo you wish to run commands locally or remote?\n")
 
 print("\nGreat!")
-while(true):
+while(True):
     print("""Here are your options:
         ----------------------
         
@@ -22,6 +22,15 @@ while(true):
         C1. Configure yum
         C2. Configure Webserver
         C3. Configure Docker
+
+        ADDITIONAL STORAGE /  DRIVES
+        ----------
+        M1. Create Static Partition
+        M2. Delete Static Partition
+        M3. Format partition
+        M4. Mount to folder
+        M5. Unmount from folder
+        M5. Create LVM
 
         DOCKER
         ------
@@ -57,6 +66,26 @@ while(true):
         os.system("yum install docker-ce --nobest -y")
         os.system("systemctl start docker")
         os.system("systemctl enable docker")
+    elif(choice == "M1"):
+        os.system("fdisk -l")
+        diskname = input("Check your drive name and input: ")
+        os.system("""echo -e "n\np\n1\n\n\nw\n" | fdisk {}""".format(diskname))
+    elif(choice=="M2"):
+        diskname = input("Input disk name: ")
+        os.system("""echo -e "d\nw\n" | fdisk {}""".format(diskname))
+    elif(choice == "M3"):
+        pname = input("Enter partition name: ")
+        os.system("mkfs.ext4 {}".format(pname))
+    elif(choice == "M4"):
+        os.system("fdisk -l")
+        pname = input("Enter partition name: ")
+        fname = input("Enter folder name: ")
+        os.system("mount {} {}".format(pname,fname))
+    elif(choice == "M5"):
+        name = input("Enter folder location/name :")
+        os.system("umount {}".format(name))
+    elif(choice == "M6"):
+        pass
     elif(choice == "D1"):
         name = input("Enter name: ")
         image = input("Enter OS: ")
@@ -75,3 +104,5 @@ while(true):
         os.system("docker ps")
     elif(choice == "D6"):
         os.system("docker ps -a")
+    else:
+        print("Incorrect Option")
