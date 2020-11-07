@@ -30,7 +30,9 @@ while(True):
         M3. Format partition
         M4. Mount to folder
         M5. Unmount from folder
-        M5. Create LVM
+        M6. Create VG - LVM (Dynamic Partition)
+        M7. Extend LVM size
+
 
         DOCKER
         ------
@@ -85,7 +87,22 @@ while(True):
         name = input("Enter folder location/name :")
         os.system("umount {}".format(name))
     elif(choice == "M6"):
-        pass
+        dname = input("Enter drive name: ")
+        vname = input("Enter VG name you want: ")
+        lname = input("Enter LV name: ")
+        lsize = input("Enter LV size (eg 30G) :")
+        floc = input("Enter folder location/name")
+        os.system("pvcreate {}".format(dname))
+        os.system("vgcreate {} {}".format(vname,dname))
+        os.system("lvcreate --size {} --name {} {}".format(lsize,lname,vname))
+        os.system("mkfs.ext4 /dev/{}/{}".format(vname,lname))
+        os.system("mount /dev/{}/{} {}".format(vname,lname,floc))
+    elif(choice == "M7"):
+        vname = input("Enter VG name")
+        lname = input("Enter LV name")
+        addsize = input("How much to extend by? :")
+        os.system("lvextend --size +{} /dev/{}/{}".format(addsize,vname,lname))
+        os.system("resize2fs /dev/{}/{}".format(vname,lname))
     elif(choice == "D1"):
         name = input("Enter name: ")
         image = input("Enter OS: ")
