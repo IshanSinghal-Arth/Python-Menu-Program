@@ -121,5 +121,31 @@ while(True):
         os.system("docker ps")
     elif(choice == "D6"):
         os.system("docker ps -a")
+    elif(choice == "H1"):
+        ip = input("Input NameNode IP: ")
+        os.system("sed -i 's/0.0.0.0/{}/g' core-site.xml".format(ip))
+        os.system("cp -rf core-site.xml /etc/hadoop/")
+        os.system("sed -i 's/{}/0.0.0.0/g' core-site.xml".format(ip))
+    elif(choice == "H2"):
+        ip = input("Input IP: ")
+        os.system("mkdir /nn")
+        os.system("cp -rf hdfs-site.xml /etc/hadoop/")
+        os.system("cp -rf core-site.xml /etc/hadoop/")
+        os.system("""echo -e "yes\n" | hadoop namenode -format""")
+        os.system("hadoop-daemon.sh start namenode")
+    elif(choice == "H3"):
+        ip = input("Input NameNode IP")
+        os.system("mkdir /dn")
+        os.system("sed -i 's/dfs.name.dir/dfs.data.dir/g' hdfs-site.xml")
+        os.system("sed -i 's/nn/dn/g' hdfs-site.xml")
+        os.system("cp -rf hdfs-site.xml /etc/hadoop/")
+        os.system("sed -i 's/dfs.data.dir/dfs.name.dir/g' hdfs-site.xml")
+        os.system("sed -i 's/dn/nn/g' hdfs-site.xml")
+        os.system("sed -i 's/0.0.0.0/{}/g' core-site.xml".format(ip))
+        os.system("cp -rf core-site.xml /etc/hadoop/")
+        os.system("sed -i 's/{}/0.0.0.0/g' core-site.xml")
+        os.system("hadoop-daemon.sh start datanode")
+    elif(choice == "H4"):
+        pass
     else:
         print("Incorrect Option")
