@@ -6,7 +6,7 @@ loc = input("\nDo you wish to run commands locally or remote?\n")
 
 print("\nGreat!")
 while(True):
-    print("""Here are your options:
+    print("""        Here are your options:
         ----------------------
         
         PRESS 0 TO EXIT
@@ -18,13 +18,13 @@ while(True):
         S3. NIC
 
         CONFIGURATIONS
-        -------------
+        --------------
         C1. Configure yum
         C2. Configure Webserver
         C3. Configure Docker
 
         ADDITIONAL STORAGE /  DRIVES
-        ----------
+        ----------------------------
         M1. Create Static Partition
         M2. Delete Static Partition
         M3. Format partition
@@ -32,7 +32,6 @@ while(True):
         M5. Unmount from folder
         M6. Create VG - LVM (Dynamic Partition)
         M7. Extend LVM size
-
 
         DOCKER
         ------
