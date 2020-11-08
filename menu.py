@@ -48,7 +48,11 @@ while(True):
         H1. Configure Client
         H2. Configure NameNode
         H3. Configure DataNode
-        H4. 
+        H4. Report
+        H5. List Data
+        H5. Put Data
+        H6. Get Data
+        H7. Remove Data
         """)
 
     choice = input("Enter your option: ")
@@ -146,6 +150,19 @@ while(True):
         os.system("sed -i 's/{}/0.0.0.0/g' core-site.xml")
         os.system("hadoop-daemon.sh start datanode")
     elif(choice == "H4"):
-        pass
+        os.system("hadoop dfsadmin -report")
+    elif(choice == "H5"):
+        os.system("hadoop fs -ls /")
+    elif(choice == "H6"):
+        floc = input("Enter file location/name: ")
+        bsize = input("Enter block size: ")
+        brep = input("Enter number of replications: ")
+        os.system("hadoop fs -Ddfs.block.size={} -Ddfs.replications={} -put {} /".format(bsize,brep,floc))
+    elif(choice == "H7"):
+        floc = input("Enter file location/name: ")
+        os.system("hadoop fs -get {}".format(floc))
+    elif(choice == "H8"):
+        floc = input("Enter file location/name: ")
+        os.system("hadoop fs -rm {}".format(floc))
     else:
         print("Incorrect Option")
